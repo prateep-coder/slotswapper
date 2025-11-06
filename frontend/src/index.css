@@ -1,0 +1,68 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f8f9fa;
+}
+
+.app-container {
+  min-height: 100vh;
+}
+
+.loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.p-message {
+  padding: 0.75rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+}
+
+.p-message-error {
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+}
+
+.p-message-warn {
+  background-color: #fffbeb;
+  border: 1px solid #fed7aa;
+  color: #ea580c;
+}
+
+/* Custom transitions */
+.transition-all {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .p-4 {
+    padding: 1rem !important;
+  }
+  
+  .flex-wrap {
+    flex-direction: column;
+  }
+}
+
+/* Custom hover effects */
+.hover\:shadow-2:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+}
+
+/* Fix for PrimeReact modal overlay */
+.p-dialog-mask {
+  background-color: rgba(0, 0, 0, 0.4);
+}

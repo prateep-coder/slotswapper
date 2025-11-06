@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "Node16",                 // ✅ changed
+    "moduleResolution": "Node16",       // ✅ matches module
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "allowJs": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "types": ["node"],
+    "outDir": "./dist",
+    "rootDir": "./src"
+  },
+  "ignoreDeprecations": "6.0",
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}
