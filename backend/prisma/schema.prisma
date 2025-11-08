@@ -2,7 +2,7 @@
 //  DATABASE CONFIG
 // ---------------------------
 datasource db {
-  provider = "sqlite"          // Local dev DB; can change to postgresql later
+  provider = "sqlite"          // or "postgresql" for production
   url      = env("DATABASE_URL")
 }
 
@@ -15,38 +15,47 @@ generator client {
 // ---------------------------
 
 model User {
-  id          String   @id @default(cuid())
-  name        String
-  email       String   @unique
-  password    String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  events      Event[]
-  sentRequests    SwapRequest[] @relation("sentRequests")
-  receivedRequests SwapRequest[] @relation("receivedRequests")
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  events            Event[]
+  sentRequests      SwapRequest[] @relation("RequestorRelation")
+  receivedRequests  SwapRequest[] @relation("ResponderRelation")
 }
 
 model Event {
-  id          String   @id @default(cuid())
-  title       String
-  startTime   DateTime
-  endTime     DateTime
-  status      String   @default("BUSY")
-  ownerId     String
-  createdAt   DateTime @default(now())
+  id        String   @id @default(cuid())
+  title     String
+  startTime DateTime
+  endTime   DateTime
+  status    String   @default("BUSY")
+  ownerId   String
+  createdAt DateTime @default(now())
 
-  owner       User     @relation(fields: [ownerId], references: [id])
+  owner     User @relation(fields: [ownerId], references: [id])
+
+  // Relations with SwapRequests
+  mySwapRequests    SwapRequest[] @relation("MySlotRelation")
+  theirSwapRequests SwapRequest[] @relation("TheirSlotRelation")
 }
 
 model SwapRequest {
-  id            String   @id @default(cuid())
-  senderId      String
-  receiverId    String
-  senderEventId String
-  receiverEventId String
-  status        String   @default("PENDING")
-  createdAt     DateTime @default(now())
+  id           String   @id @default(cuid())
+  mySlotId     String
+  theirSlotId  String
+  requestorId  String
+  responderId  String
+  status       String   @default("PENDING")
+  createdAt    DateTime @default(now())
 
-  sender        User   @relation("sentRequests", fields: [senderId], references: [id])
-  receiver      User   @relation("receivedRequests", fields: [receiverId], references: [id])
+  // Relations
+  mySlot     Event @relation("MySlotRelation", fields: [mySlotId], references: [id])
+  theirSlot  Event @relation("TheirSlotRelation", fields: [theirSlotId], references: [id])
+  requestor  User  @relation("RequestorRelation", fields: [requestorId], references: [id])
+  responder  User  @relation("ResponderRelation", fields: [responderId], references: [id])
 }
