@@ -9,12 +9,12 @@ export default defineConfig({
       name: 'copy-redirects',
       closeBundle() {
         try {
-          copyFileSync('public/redirects.txt', 'dist/_redirects')
+          copyFileSync('public/_redirects', 'dist/_redirects')
           console.log('✅ _redirects file copied to dist/')
         } catch (e) {
-          console.error('⚠️ Failed to copy _redirects:', e)
+          console.warn('⚠️ Could not copy _redirects file:', e)
         }
       }
     }
-  ],
+  ]
 })
